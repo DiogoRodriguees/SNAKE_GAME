@@ -11,6 +11,9 @@ var score = 0;
 
 // Função para iniciar o jogo
 function startGame() {
+    document.getElementById("canvas").style.display = "flex";
+    document.getElementById("finish").style.display = "block";
+
     snake = new Snake();
     fruit = new Fruit();
     createGraphic();
@@ -20,6 +23,8 @@ function startGame() {
 // Função para finalizar o jogo
 function gameOver() {
     clearInterval(interval);
+    document.getElementById("canvas").style.display = "none";
+    document.getElementById("finish").style.display = "none";
 }
 
 // Função que atualiza o display(canvas)
@@ -71,7 +76,12 @@ class Snake {
                 sizePixelDefault - 1
             );
         }
-        canvasContext.fillRect(snake.x, snake.y, sizePixelDefault - 1, sizePixelDefault - 1);
+        canvasContext.fillRect(
+            snake.x,
+            snake.y,
+            sizePixelDefault - 1,
+            sizePixelDefault - 1
+        );
     }
 
     eatFruit() {
@@ -149,7 +159,12 @@ class Fruit {
 
     createGraphic() {
         canvasContext.fillStyle = "red";
-        canvasContext.fillRect(this.x, this.y, sizePixelDefault, sizePixelDefault);
+        canvasContext.fillRect(
+            this.x,
+            this.y,
+            sizePixelDefault,
+            sizePixelDefault
+        );
     }
 }
 

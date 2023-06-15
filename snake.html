@@ -15,6 +15,8 @@
 
                 display: flex;
                 flex-direction: column;
+
+                background: url(./background.jpg) no-repeat;
             }
             button {
                 border: none;
@@ -28,18 +30,42 @@
                 font-size: 25px;
                 font-weight: 500;
             }
-
+            
+            .container {
+                display: flex;
+                width: 100vw;
+                height: 100vh;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 30px;
+            }
+            
+            .game-btn {
+                display: flex;    
+                gap: 30px;
+            }
+            
             #canvas {
                 background-color: black;
                 z-index: -1;
-                width: 600px;
-                height: 600px;
+                display: none;
+            }
+            
+            #finish {
+                display: none;
             }
         </style>
     </head>
     <body>
-        <button onclick="startGame()">Jogar</button>
-        <canvas id="canvas" width="600px" height="600px"></canvas>
+        <div class="container">
+            <div class="game-btn">
+                <button onclick="startGame()">Start</button>
+                <button onclick="gameOver()" id="finish">Finish</button>
+                
+            </div>
+            <canvas id="canvas" width="600px" height="600px"></canvas>
+        </div>
         <script src="game.js"></script>
     </body>
 </html>
