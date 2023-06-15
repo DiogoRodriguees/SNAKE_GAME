@@ -25,7 +25,6 @@ function gameOver() {
 // Função que atualiza o display(canvas)
 function updateGame() {
     snake.update();
-    snake.checkColision()
     snake.eatFruit();
     createGraphic();
 }
@@ -63,8 +62,8 @@ class Snake {
     }
 
     createGraphic() {
+        canvasContext.fillStyle = "green";
         for (let i = 0; i < snake.tail.length; i++) {
-            canvasContext.fillStyle = "green";
             canvasContext.fillRect(
                 snake.tail[i].x,
                 snake.tail[i].y,
@@ -72,13 +71,7 @@ class Snake {
                 sizePixelDefault - 1
             );
         }
-        canvasContext.fillStyle = "white";
-        canvasContext.fillRect(
-            snake.x,
-            snake.y,
-            sizePixelDefault - 1,
-            sizePixelDefault - 1
-        );
+        canvasContext.fillRect(snake.x, snake.y, sizePixelDefault - 1, sizePixelDefault - 1);
     }
 
     eatFruit() {
@@ -119,19 +112,6 @@ class Snake {
         }
     }
 
-    checkColision() {
-        let lastPosition = this.tail.length - 1;
-        let headSnake = this.tail[length -1];
-
-        for (let i = 0; i < lastPosition; i++) {
-            if(headSnake.x === this.tail[i].x){
-                if(headSnake.y === this.tail[i].y){
-                    gameOver()
-                }
-            }
-        }
-    }
-
     update() {
         let lastPosition = this.tail.length - 1;
 
@@ -169,12 +149,7 @@ class Fruit {
 
     createGraphic() {
         canvasContext.fillStyle = "red";
-        canvasContext.fillRect(
-            this.x,
-            this.y,
-            sizePixelDefault,
-            sizePixelDefault
-        );
+        canvasContext.fillRect(this.x, this.y, sizePixelDefault, sizePixelDefault);
     }
 }
 
