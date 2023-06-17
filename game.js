@@ -8,30 +8,44 @@ var sizePixelDefault = 20;
 var snake;
 var fruit;
 var score = 0;
+var gameRuning = false;
 
 // Função para iniciar o jogo
 function startGame() {
-    document.getElementById("canvas").style.display = "flex";
-    document.getElementById("finish").style.display = "block";
+    if (!gameRuning) {
+        gameRuning = true;
+        document.getElementById("canvas").style.display = "flex";
+        document.getElementById("finish").style.display = "block";
+        document.getElementById("start").textContent = "Restart";
 
-    snake = new Snake();
-    fruit = new Fruit();
+        snake = new Snake();
+        fruit = new Fruit();
 
-    createGraphic();
-    interval = setInterval(updateGame, 100);
+        createGraphic();
+        interval = setInterval(updateGame, 100);
+    } else {
+        restartGame();
+    }
+}
+
+function restartGame(game) {
+    gameOver();
+    startGame();
 }
 
 // Função que finaliza o game pelo botao finish
 function finishGame() {
     document.getElementById("canvas").style.display = "none";
     document.getElementById("finish").style.display = "none";
+    document.getElementById("start").textContent = "Start";
 
     gameOver();
 }
 
 // Função para finalizar o jogo
 function gameOver() {
-    score = 0
+    score = 0;
+    gameRuning = false;
     
     clearInterval(interval);
     canvasContext.font = "20px Arial";
