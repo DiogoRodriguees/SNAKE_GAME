@@ -16,22 +16,36 @@ function startGame() {
 
     snake = new Snake();
     fruit = new Fruit();
+
     createGraphic();
     interval = setInterval(updateGame, 100);
 }
 
-// Função para finalizar o jogo
-function gameOver() {
-    clearInterval(interval);
+// Função que finaliza o game pelo botao finish
+function finishGame() {
     document.getElementById("canvas").style.display = "none";
     document.getElementById("finish").style.display = "none";
+
+    gameOver();
+}
+
+// Função para finalizar o jogo
+function gameOver() {
+    score = 0
+    
+    clearInterval(interval);
+    canvasContext.font = "20px Arial";
+    canvasContext.fillStyle = "white";
+    canvasContext.fillText("Game Over", canvasSize / 2 - 60, canvasSize / 2);
 }
 
 // Função que atualiza o display(canvas)
 function updateGame() {
     snake.update();
-    snake.eatFruit();
-    createGraphic();
+    if (!snake.checkColision()) {
+        snake.eatFruit();
+        createGraphic();
+    }
 }
 
 // Função que atualiza o elementos do jogo
@@ -46,7 +60,7 @@ function createGraphic() {
 function createGraphicScore() {
     canvasContext.font = "20px Arial";
     canvasContext.fillStyle = "white";
-    canvasContext.fillText("Score : " + score, 0, 18);
+    canvasContext.fillText("Score : " + score, 15, 25);
 }
 
 // Função que gera uma cordenada aleatorio
@@ -66,19 +80,32 @@ class Snake {
         console.log("Snake generate in x:" + this.x + " y: " + this.y);
     }
 
+    checkColision() {
+        for (let i = 0; i < this.tail.length; i++) {
+            if (this.tail[i].x == this.x) {
+                if (this.tail[i].y == this.y) {
+                    gameOver();
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     createGraphic() {
         canvasContext.fillStyle = "green";
         for (let i = 0; i < snake.tail.length; i++) {
             canvasContext.fillRect(
-                snake.tail[i].x,
-                snake.tail[i].y,
+                this.tail[i].x,
+                this.tail[i].y,
                 sizePixelDefault - 1,
                 sizePixelDefault - 1
             );
         }
+        canvasContext.fillStyle = "blue";
         canvasContext.fillRect(
-            snake.x,
-            snake.y,
+            this.x,
+            this.y,
             sizePixelDefault - 1,
             sizePixelDefault - 1
         );
