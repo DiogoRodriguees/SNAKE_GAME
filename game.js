@@ -4,6 +4,7 @@ const canvasContext = canvas.getContext("2d");
 var interval;
 var canvasSize = 600;
 var sizePixelDefault = 20;
+var timeUpdate = 80;
 
 var snake;
 var fruit;
@@ -22,7 +23,7 @@ function startGame() {
         fruit = new Fruit();
 
         createGraphic();
-        interval = setInterval(updateGame, 100);
+        interval = setInterval(updateGame, timeUpdate);
     } else {
         restartGame();
     }
@@ -46,7 +47,7 @@ function finishGame() {
 function gameOver() {
     score = 0;
     gameRuning = false;
-    
+
     clearInterval(interval);
     canvasContext.font = "40px Arial";
     canvasContext.fillStyle = "white";
@@ -110,18 +111,18 @@ class Snake {
         canvasContext.fillStyle = "green";
         for (let i = 0; i < snake.tail.length; i++) {
             canvasContext.fillRect(
-                this.tail[i].x,
-                this.tail[i].y,
-                sizePixelDefault - 1,
-                sizePixelDefault - 1
+                this.tail[i].x ,
+                this.tail[i].y ,
+                sizePixelDefault,
+                sizePixelDefault
             );
         }
         canvasContext.fillStyle = "blue";
         canvasContext.fillRect(
             this.x,
             this.y,
-            sizePixelDefault - 1,
-            sizePixelDefault - 1
+            sizePixelDefault,
+            sizePixelDefault
         );
     }
 
