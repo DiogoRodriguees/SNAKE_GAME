@@ -71,7 +71,7 @@ function gameOver() {
 
 // Função que atualiza o display(canvas)
 function updateGame() {
-    snake.update(score);
+    snake.update();
 
     if (!snake.checkColision()) {
         if (snake.eatFruit(fruit)) {

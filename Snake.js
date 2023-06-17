@@ -82,14 +82,14 @@ export default class Snake {
         }
     }
 
-    update(score) {
+    update() {
         let lastPosition = this.tail.length - 1;
 
         for (let i = 0; i < lastPosition; i++) {
             this.tail[i] = this.tail[i + 1];
         }
 
-        this.tail[score - 1] = { x: this.x, y: this.y };
+        this.tail[lastPosition] = { x: this.x, y: this.y };
 
         // atualizando a posição da cabeça
         this.x += this.directionX * this.sizePixel;
