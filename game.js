@@ -28,7 +28,7 @@ function startGame() {
     }
 }
 
-function restartGame(game) {
+function restartGame() {
     gameOver();
     startGame();
 }
