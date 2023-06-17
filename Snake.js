@@ -23,7 +23,7 @@ export default class Snake {
         return false;
     }
 
-    createGraphic() {
+    updateGraphic() {
         this.canvasContext.fillStyle = this.color;
         for (let i = 0; i < this.tail.length; i++) {
             this.canvasContext.fillRect(

@@ -14,7 +14,7 @@ export default class Fruit {
         this.y = this.getRandomPosition();
     }
 
-    createGraphic() {
+    updateGraphic() {
         this.ctx.fillStyle = this.color;
         this.ctx.fillRect(this.x, this.y, this.sizeFruit, this.sizeFruit);
     }

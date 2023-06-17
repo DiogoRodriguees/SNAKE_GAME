@@ -37,7 +37,7 @@ function startGame() {
         );
         fruit = new Fruit(canvasContext, canvasSize, sizePixelDefault, "red");
 
-        createGraphic();
+        updateGraphic();
         interval = setInterval(updateGame, timeUpdate);
     } else {
         restartGame();
@@ -78,17 +78,17 @@ function updateGame() {
             score++;
             fruit.generate();
         }
-        createGraphic();
+        updateGraphic();
     } else {
         gameOver();
     }
 }
 
 // Função que atualiza o elementos do jogo
-function createGraphic() {
+function updateGraphic() {
     canvasContext.clearRect(0, 0, canvasSize, canvasSize);
-    snake.createGraphic();
-    fruit.createGraphic();
+    snake.updateGraphic();
+    fruit.updateGraphic();
     createGraphicScore();
 }
 
