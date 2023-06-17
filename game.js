@@ -48,9 +48,9 @@ function gameOver() {
     gameRuning = false;
     
     clearInterval(interval);
-    canvasContext.font = "20px Arial";
+    canvasContext.font = "40px Arial";
     canvasContext.fillStyle = "white";
-    canvasContext.fillText("Game Over", canvasSize / 2 - 60, canvasSize / 2);
+    canvasContext.fillText("Game Over", canvasSize / 2 - 110, canvasSize / 2);
 }
 
 // Função que atualiza o display(canvas)
