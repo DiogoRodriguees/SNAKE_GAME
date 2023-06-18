@@ -27,15 +27,13 @@ var score = 0;
 // Função para iniciar o jogo
 function startGame() {
     if (!interval) {
-        document.getElementById("canvas").style.display = "flex";
-        document.getElementById("finish").style.display = "block";
-        document.getElementById("start").textContent = "Restart";
+        changeDisplayToStartedGame();
 
         snake = new Snake(canvasContext, canvasSize, sizePixelDefault);
         fruit = new Fruit(canvasContext, canvasSize, sizePixelDefault, "red");
         keyboardListener(document, snake);
 
-        updateGraphic();
+        updateDisplay();
         interval = setInterval(updateGame, timeInterval);
     } else {
         restartGame();
@@ -43,17 +41,17 @@ function startGame() {
 }
 
 function restartGame() {
-    gameOver();
+    clearInterval(interval);
+    interval = false;
+    score = 0;
     startGame();
 }
 
 // Função que finaliza o game pelo botao finish
 function finishGame() {
-    document.getElementById("canvas").style.display = "none";
-    document.getElementById("finish").style.display = "none";
-    document.getElementById("start").textContent = "Start";
-
-    gameOver();
+    changeDisplayToFinishedGame();
+    score = 0;
+    clearInterval(interval);
 }
 
 // Função para finalizar o jogo
@@ -77,14 +75,14 @@ function updateGame() {
             fruit.generate();
         }
 
-        updateGraphic();
+        updateDisplay();
     } else {
         gameOver();
     }
 }
 
 // Função que atualiza o elementos do jogo
-function updateGraphic() {
+function updateDisplay() {
     canvasContext.clearRect(0, 0, canvasSize, canvasSize);
     snake.updateGraphic();
     fruit.updateGraphic();
@@ -94,6 +92,18 @@ function updateGraphic() {
 // Função que atualiza o Score
 function createGraphicScore() {
     canvasInterface.createGraphicWithText(20, "Score: ", score, 15, 25);
+}
+
+function changeDisplayToStartedGame() {
+    document.getElementById("canvas").style.display = "flex";
+    document.getElementById("finish").style.display = "block";
+    document.getElementById("start").textContent = "Restart";
+}
+
+function changeDisplayToFinishedGame() {
+    document.getElementById("canvas").style.display = "none";
+    document.getElementById("finish").style.display = "none";
+    document.getElementById("start").textContent = "Start";
 }
 
 /* Eventos */
