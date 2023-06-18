@@ -1,5 +1,6 @@
 import Fruit from "./Fruit.js";
 import Snake from "./Snake.js";
+import Interface from "./Interface.js";
 
 const btnStart = document.getElementById("start");
 const btnFinish = document.getElementById("finish");
@@ -9,21 +10,21 @@ btnFinish.addEventListener("click", finishGame);
 
 const canvas = document.getElementById("canvas");
 const canvasContext = canvas.getContext("2d");
+const canvasSize = 600;
+
+const canvasInterface = new Interface(canvasSize, canvasContext);
 
 var interval;
-const canvasSize = 600;
 const sizePixelDefault = 20;
 const timeUpdate = 80;
 
 var snake;
 var fruit;
 var score = 0;
-var gameRuning = false;
 
 // Função para iniciar o jogo
 function startGame() {
-    if (!gameRuning) {
-        gameRuning = true;
+    if (!interval) {
         document.getElementById("canvas").style.display = "flex";
         document.getElementById("finish").style.display = "block";
         document.getElementById("start").textContent = "Restart";
@@ -61,12 +62,19 @@ function finishGame() {
 // Função para finalizar o jogo
 function gameOver() {
     score = 0;
-    gameRuning = false;
 
     clearInterval(interval);
-    canvasContext.font = "40px Arial";
-    canvasContext.fillStyle = "white";
-    canvasContext.fillText("Game Over", canvasSize / 2 - 110, canvasSize / 2);
+    let x = canvasSize / 2 - 110;
+    let y = canvasSize / 2;
+
+    canvasInterface.createGraphicWithText(
+        "40px Arial",
+        "white",
+        "Game Over",
+        "",
+        x,
+        y
+    );
 }
 
 // Função que atualiza o display(canvas)
@@ -94,9 +102,14 @@ function updateGraphic() {
 
 // Função que atualiza o Score
 function createGraphicScore() {
-    canvasContext.font = "20px Arial";
-    canvasContext.fillStyle = "white";
-    canvasContext.fillText("Score : " + score, 15, 25);
+    canvasInterface.createGraphicWithText(
+        "20px Arial",
+        "white",
+        "Score: ",
+        score,
+        15,
+        25
+    );
 }
 
 const alternativeKeys = {
