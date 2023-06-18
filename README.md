@@ -1,2 +1,1 @@
-# SNAKE_GAME
-Imitando jogo da cobrinha
+![Capa](./img/capa_readme.png)
