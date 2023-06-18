@@ -11,7 +11,6 @@ const alternativeKeys = {
 
 export default function keyboardListener(document, snake) {
     document.addEventListener("keydown", (event) => {
-        console.log(alternativeKeys[event.key]);
         snake.changeDirection(alternativeKeys[event.key]);
     });
 }
