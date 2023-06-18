@@ -1,15 +1,17 @@
 export default class Snake {
-    constructor(canvasContext, borderLimit, sizePixel, headColor, color) {
+    constructor(canvasContext, borderLimit, sizePixel) {
         this.x = sizePixel; // head in position X
         this.y = sizePixel; // head in position Y
         this.tail = [];
         this.directionX = 1;
         this.directionY = 0;
-        this.canvasContext = canvasContext;
-        this.borderLimit = borderLimit;
-        this.colorHead = headColor;
-        this.color = color;
+
         this.sizePixel = sizePixel;
+        this.borderLimit = borderLimit;
+        this.canvasContext = canvasContext;
+
+        this.color = "green";
+        this.colorHead = "blue";
     }
 
     checkColision() {
@@ -23,7 +25,7 @@ export default class Snake {
         return false;
     }
 
-    createGraphic() {
+    updateGraphic() {
         this.canvasContext.fillStyle = this.color;
         for (let i = 0; i < this.tail.length; i++) {
             this.canvasContext.fillRect(

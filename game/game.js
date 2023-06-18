@@ -1,44 +1,42 @@
-import Fruit from "./Fruit.js";
-import Snake from "./Snake.js";
+import Fruit from "../classes/fruit.class.js";
+import Snake from "../classes/snake.class.js";
+import Interface from "../classes/interface.class.js";
+import keyboardListener from "../classes/keyboard.class.js";
 
+// Botoes
 const btnStart = document.getElementById("start");
 const btnFinish = document.getElementById("finish");
 
-btnStart.addEventListener("click", startGame);
-btnFinish.addEventListener("click", finishGame);
-
+// Recebendo o canvas
 const canvas = document.getElementById("canvas");
 const canvasContext = canvas.getContext("2d");
 
-var interval;
+// Limite do canvas e iniciando a interface
 const canvasSize = 600;
-const sizePixelDefault = 20;
-const timeUpdate = 80;
+const canvasInterface = new Interface(canvasSize, canvasContext);
 
+// Intervalo de atualização
+var interval;
+const timeInterval = 80;
+
+const sizePixelDefault = 20;
 var snake;
 var fruit;
 var score = 0;
-var gameRuning = false;
 
 // Função para iniciar o jogo
 function startGame() {
-    if (!gameRuning) {
-        gameRuning = true;
+    if (!interval) {
         document.getElementById("canvas").style.display = "flex";
         document.getElementById("finish").style.display = "block";
         document.getElementById("start").textContent = "Restart";
 
-        snake = new Snake(
-            canvasContext,
-            canvasSize,
-            sizePixelDefault,
-            "blue",
-            "green"
-        );
+        snake = new Snake(canvasContext, canvasSize, sizePixelDefault);
         fruit = new Fruit(canvasContext, canvasSize, sizePixelDefault, "red");
+        keyboardListener(document, snake);
 
-        createGraphic();
-        interval = setInterval(updateGame, timeUpdate);
+        updateGraphic();
+        interval = setInterval(updateGame, timeInterval);
     } else {
         restartGame();
     }
@@ -61,12 +59,12 @@ function finishGame() {
 // Função para finalizar o jogo
 function gameOver() {
     score = 0;
-    gameRuning = false;
-
     clearInterval(interval);
-    canvasContext.font = "40px Arial";
-    canvasContext.fillStyle = "white";
-    canvasContext.fillText("Game Over", canvasSize / 2 - 110, canvasSize / 2);
+
+    let x = canvasSize / 2 - 110;
+    let y = canvasSize / 2;
+
+    canvasInterface.createGraphicWithText(40, "Game Over", "", x, y);
 }
 
 // Função que atualiza o display(canvas)
@@ -78,39 +76,26 @@ function updateGame() {
             score++;
             fruit.generate();
         }
-        createGraphic();
+
+        updateGraphic();
     } else {
         gameOver();
     }
 }
 
 // Função que atualiza o elementos do jogo
-function createGraphic() {
+function updateGraphic() {
     canvasContext.clearRect(0, 0, canvasSize, canvasSize);
-    snake.createGraphic();
-    fruit.createGraphic();
+    snake.updateGraphic();
+    fruit.updateGraphic();
     createGraphicScore();
 }
 
 // Função que atualiza o Score
 function createGraphicScore() {
-    canvasContext.font = "20px Arial";
-    canvasContext.fillStyle = "white";
-    canvasContext.fillText("Score : " + score, 15, 25);
+    canvasInterface.createGraphicWithText(20, "Score: ", score, 15, 25);
 }
 
-const alternativeKeys = {
-    a: "ArrowLeft",
-    d: "ArrowRight",
-    s: "ArrowDown",
-    w: "ArrowUp",
-    ArrowLeft: "ArrowLeft",
-    ArrowRight: "ArrowRight",
-    ArrowDown: "ArrowDown",
-    ArrowUp: "ArrowUp",
-};
-
-// Função para escutar o teclado
-document.addEventListener("keydown", (event) => {
-    snake.changeDirection(alternativeKeys[event.key]);
-});
+/* Eventos */
+btnStart.addEventListener("click", startGame);
+btnFinish.addEventListener("click", finishGame);
